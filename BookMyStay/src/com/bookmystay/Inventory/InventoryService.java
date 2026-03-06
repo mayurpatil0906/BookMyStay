@@ -39,4 +39,7 @@ public class InventoryService {
 					);
 		}
 	}
+	public Map<String, Room> getInventory() {
+	    return inventory;
+	}
 }
