@@ -2,6 +2,7 @@ package com.bookmystay.main;
 
 import com.bookmystay.booking.BookingQueueService;
 import com.bookmystay.Inventory.InventoryService;
+import com.bookmystay.history.BookingHistoryService;
 import com.bookmystay.model.Reservation;
 import com.bookmystay.reservation.AllocationService;
 
@@ -12,6 +13,7 @@ public class ReservationConfirmationApp {
         InventoryService inventory = new InventoryService();
         BookingQueueService queueService = new BookingQueueService();
         AllocationService allocationService = new AllocationService();
+        BookingHistoryService historyService = new BookingHistoryService();
 
         // Example inventory
         inventory.addRoomType("single", 3, 2000);
@@ -25,7 +27,14 @@ public class ReservationConfirmationApp {
 
             Reservation request = queueService.getNextBooking();
 
-            allocationService.confirmReservation(request, inventory);
+            allocationService.confirmReservation(
+                    request,
+                    inventory,
+                    historyService
+            );
         }
+
+        // show booking history after confirmation
+        historyService.showAllReservations();
     }
 }
