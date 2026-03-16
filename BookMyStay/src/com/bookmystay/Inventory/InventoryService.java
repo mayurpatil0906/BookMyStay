@@ -39,6 +39,27 @@ public class InventoryService {
 					);
 		}
 	}
+	public boolean isRoomAvailable(String type) {
+
+	    Room room = inventory.get(type);
+
+	    if (room == null) {
+	        return false;
+	    }
+
+	    return room.getAvailableCount() > 0;
+	}
+	public void decreaseRoomCount(String type) {
+
+	    Room room = inventory.get(type);
+
+	    if (room != null) {
+
+	        int current = room.getAvailableCount();
+	        room.setAvailableCount(current - 1);
+
+	    }
+	}
 	public Map<String, Room> getInventory() {
 	    return inventory;
 	}

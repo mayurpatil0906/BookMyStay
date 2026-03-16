@@ -9,35 +9,43 @@ public class BookingQueueService {
 
     private Queue<Reservation> bookingQueue = new LinkedList<>();
 
-
-    // Add booking request
+    // Add booking request using guest name and room type
     public void addBookingRequest(String guestName, String roomType) {
 
         Reservation reservation = new Reservation(guestName, roomType);
 
-        bookingQueue.offer(reservation);
+        bookingQueue.add(reservation);
 
         System.out.println("Booking request added to queue.");
     }
-
 
     // Process next booking request (FIFO)
     public void processNextRequest() {
 
         if (bookingQueue.isEmpty()) {
+
             System.out.println("No booking requests in queue.");
             return;
         }
 
-        Reservation reservation = bookingQueue.poll();
+        Reservation r = bookingQueue.poll();
 
         System.out.println("\nProcessing Booking Request");
-        System.out.println("Guest: " + reservation.getGuestName());
-        System.out.println("Room Type: " + reservation.getRoomType());
+        System.out.println("Guest: " + r.getGuestName());
+        System.out.println("Room Type: " + r.getRoomType());
     }
 
+    // Used later in UC4
+    public Reservation getNextBooking() {
+        return bookingQueue.poll();
+    }
 
-    // Show pending requests
+    // Check queue status
+    public boolean isQueueEmpty() {
+        return bookingQueue.isEmpty();
+    }
+
+    // Display queue
     public void showQueue() {
 
         if (bookingQueue.isEmpty()) {
@@ -45,14 +53,10 @@ public class BookingQueueService {
             return;
         }
 
-        System.out.println("\n--- Pending Booking Requests ---");
+        System.out.println("\nCurrent Booking Queue:");
 
         for (Reservation r : bookingQueue) {
-
-            System.out.println(
-                    "Guest: " + r.getGuestName() +
-                    " | Room Type: " + r.getRoomType()
-            );
+            System.out.println(r.getGuestName() + " -> " + r.getRoomType());
         }
     }
 }
